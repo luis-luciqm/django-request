@@ -28,6 +28,7 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
         requests = Request.objects \
             .filter(path__icontains = '/api/v3/app/produto/list-detail-of-product/'
             , time__gte = (timezone.now() - timedelta(minutes = 1))) \
+            .values('path') \
             .annotate(quantity = Count('path')) \
             .order_by('-quantity')
         
