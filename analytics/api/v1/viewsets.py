@@ -20,7 +20,7 @@ class RequestPechinchouSaveViewSet(APIView):
         
 class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
     serializer_class = RequestSerializer
-    
+
     def get(self, request, *args, **kwargs):
         # TransactionAmazon.objects.filter(data__date = endDate).values('nome').annotate(data = Max('data'), categoria = Max('categoria'), dispositivo = Max('dispositivo'), price = Max('price'), qtd_pedidos = Max('qtd_pedidos'), quantity = Count('nome')).order_by('-quantity')
 
@@ -28,7 +28,7 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
         requests = Request.objects \
             .filter(path__icontains = '/api/v3/app/produto/list-detail-of-product/'
             , time__gte = (timezone.now() - timedelta(minutes = 1))) \
-            .annotate(users = Count('path')) \
+            .annotate(quantity = Count('path')) \
             .order_by('-quantity')
         
         print(requests)
