@@ -23,7 +23,7 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
     serializer_class = RequestSerializer
 
     def get(self, request, *args, **kwargs):
-        minutes = int(self.request.GET.get('minutes'))
+        minutes = self.request.GET.get('minutes')
 
         if not minutes:
             return Response({'error': 'É necessário enviar o parametro "minutes"!'}, status = status.HTTP_400_BAD_REQUEST)
@@ -35,7 +35,7 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
         # preciso pegar todas as requests do ultimo minuto
         requests = Request.objects \
             .filter(path__icontains = '/api/produto/adicionar_view_melhorada_v2/'
-            , time__gte = (timezone.now() - timedelta(minutes = 1))) \
+                , time__gte = (timezone.now() - timedelta(minutes = int(minutes)))) \
             .values('path') \
             .annotate(quantity = Count('path')) \
             .order_by('-quantity')[:30]
