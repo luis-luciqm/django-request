@@ -20,7 +20,6 @@ class RequestPechinchouSaveViewSet(APIView):
 class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
 
     def get(self, request, *args, **kwargs):
-
         # TransactionAmazon.objects.filter(data__date = endDate).values('nome').annotate(data = Max('data'), categoria = Max('categoria'), dispositivo = Max('dispositivo'), price = Max('price'), qtd_pedidos = Max('qtd_pedidos'), quantity = Count('nome')).order_by('-quantity')
 
         # preciso pegar todas as requests do ultimo minuto
