@@ -6,11 +6,7 @@ class RequestPechinchouSaveViewSet(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
-
-            print('\n\nreq -> ', request.data)
-
             object = request.data
-
             data = Request(**object)
             data.save()
 
