@@ -1,5 +1,6 @@
-from rest_framework.views import APIView, Response
+from rest_framework.views import APIView, Response, status
 from analytics.api.v1.serializers import RequestSerializer
+from django.core.cache import cache
 
 from request.models import Request
 from django.utils import timezone
@@ -22,8 +23,15 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
     serializer_class = RequestSerializer
 
     def get(self, request, *args, **kwargs):
-        # TransactionAmazon.objects.filter(data__date = endDate).values('nome').annotate(data = Max('data'), categoria = Max('categoria'), dispositivo = Max('dispositivo'), price = Max('price'), qtd_pedidos = Max('qtd_pedidos'), quantity = Count('nome')).order_by('-quantity')
+        minutes = int(self.kwargs.GET.get('minutes'))
 
+        if not minutes:
+            return Response({'error': 'É necessário enviar o parametro "minutes"!'}, status = status.HTTP_400_BAD_REQUEST)
+
+        res = cache.get(minutes)
+        if res:
+            return Response(res, status = status.HTTP_200_OK)
+        
         # preciso pegar todas as requests do ultimo minuto
         requests = Request.objects \
             .filter(path__icontains = '/api/produto/adicionar_view_melhorada_v2/'
@@ -35,4 +43,5 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
         serializer = self.serializer_class(requests, many = True)
         data = serializer.data
 
-        return Response(data)
+        cache.set(minutes, data, timeout = 30)
+        return Response(data, status = status.HTTP_200_OK)
