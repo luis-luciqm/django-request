@@ -10,6 +10,7 @@ class RequestSerializer(serializers.ModelSerializer):
         fields = ['path', 'quantity', 'url']
 
     def get_url(self, obj):
+        print(obj['path'].split('/')[-1])
         product = obj['path'].split('/')[-1] if obj['path'] else None
 
         if product is None:
