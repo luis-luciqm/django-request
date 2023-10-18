@@ -32,7 +32,7 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
         if res:
             return Response(res, status = status.HTTP_200_OK)
         
-        # preciso pegar todas as requests do ultimo minuto
+        # preciso pegar todas as requests
         requests = Request.objects \
             .filter(path__icontains = '/api/produto/adicionar_view_melhorada_v2/'
                 , time__gte = (timezone.now() - timedelta(minutes = int(minutes)))) \
