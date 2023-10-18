@@ -1,4 +1,5 @@
 from rest_framework.views import APIView, Response
+from analytics.api.v1.serializers import RequestSerializer
 
 from request.models import Request
 from django.utils import timezone
@@ -18,7 +19,8 @@ class RequestPechinchouSaveViewSet(APIView):
             return Response({'error': f'Ocorreu um erro ao salvar: {e}'})
         
 class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
-
+    serializer_class = RequestSerializer
+    
     def get(self, request, *args, **kwargs):
         # TransactionAmazon.objects.filter(data__date = endDate).values('nome').annotate(data = Max('data'), categoria = Max('categoria'), dispositivo = Max('dispositivo'), price = Max('price'), qtd_pedidos = Max('qtd_pedidos'), quantity = Count('nome')).order_by('-quantity')
 
