@@ -31,6 +31,7 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
             .annotate(quantity = Count('path')) \
             .order_by('-quantity')
         
-        print(requests)
+        serializer = self.serializer_class(requests, many = True)
+        data = serializer.data
 
-        return Response('OK')
+        return Response(data)
