@@ -5,3 +5,4 @@ class RequestSerializer(serializers.ModelSerializer):
     quantity = serializers.IntegerField(default = 0)
     class Meta:
         model = Request
+        fields = '__all__'
