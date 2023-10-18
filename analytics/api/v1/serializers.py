@@ -16,4 +16,4 @@ class RequestSerializer(serializers.ModelSerializer):
         if product is None:
             return product
         
-        return f'https://pechinchou.com.br/oferta/{product}/'
+        return f'https://local.pechinchou.com.br/oferta/{product}/'
