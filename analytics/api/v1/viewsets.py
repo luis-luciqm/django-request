@@ -26,7 +26,7 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
 
         # preciso pegar todas as requests do ultimo minuto
         requests = Request.objects \
-            .filter(path__icontains = '/api/v3/app/produto/list-detail-of-product/'
+            .filter(path__icontains = '/api/v2/produto/novo_detalhe_produto/'
             , time__gte = (timezone.now() - timedelta(minutes = 1))) \
             .values('path') \
             .annotate(quantity = Count('path')) \
