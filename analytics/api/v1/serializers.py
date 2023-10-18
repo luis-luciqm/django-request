@@ -7,7 +7,7 @@ class RequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Request
-        fields = ['path', 'quantity', 'url']
+        fields = ['url', 'quantity']
 
     def get_url(self, obj):
         print(obj['path'].split('/'))
