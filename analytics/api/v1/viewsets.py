@@ -30,8 +30,8 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
             , time__gte = (timezone.now() - timedelta(minutes = 1))) \
             .values('path') \
             .annotate(quantity = Count('path')) \
-            .order_by('-quantity')
-        
+            .order_by('-quantity')[:20]
+
         serializer = self.serializer_class(requests, many = True)
         data = serializer.data
 
