@@ -23,7 +23,7 @@ class ViewAndAgroupRoutesByDetailOfProductMostAccessedInAPPLastMinute(APIView):
     serializer_class = RequestSerializer
 
     def get(self, request, *args, **kwargs):
-        minutes = int(self.kwargs.GET.get('minutes'))
+        minutes = int(self.request.GET.get('minutes'))
 
         if not minutes:
             return Response({'error': 'É necessário enviar o parametro "minutes"!'}, status = status.HTTP_400_BAD_REQUEST)
